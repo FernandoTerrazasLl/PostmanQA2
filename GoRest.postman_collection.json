@@ -1,0 +1,1026 @@
+{
+  "info": {
+    "_postman_id": "8518f5c7-f374-43bb-80de-f160eec8796b",
+    "name": "GoRest",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "40577735"
+  },
+  "item": [
+    {
+      "name": "user",
+      "item": [
+        {
+          "name": "Crear Usuario",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "const jsonResponse = pm.response.json();",
+                  "",
+                  "pm.test(\"Status code is 201\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "pm.test(\"Response time is less than 200ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(900);",
+                  "});",
+                  "",
+                  "pm.test(\"User ID is not null\", function () {",
+                  "    pm.expect(jsonResponse.id).to.not.be.null;",
+                  "    postman.setEnvironmentVariable('idUsuario', jsonResponse.id);",
+                  "});",
+                  "",
+                  "pm.test(\"User has all required fields\", function () {",
+                  "    pm.expect(jsonResponse).to.have.property(\"id\");",
+                  "    pm.expect(jsonResponse).to.have.property(\"name\");",
+                  "    pm.expect(jsonResponse).to.have.property(\"email\");",
+                  "    pm.expect(jsonResponse).to.have.property(\"gender\");",
+                  "    pm.expect(jsonResponse).to.have.property(\"status\");",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            },
+            {
+              "listen": "prerequest",
+              "script": {
+                "exec": [
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"fernando terrazas\",\n  \"email\": \"fernand@gmail.com\",\n  \"gender\": \"male\",\n  \"status\": \"active\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{URL}}/v2/users",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "v2",
+                "users"
+              ]
+            },
+            "description": "Generated from cURL: curl -X POST 'https://gorest.co.in/public/v2/users' \\\n  -H 'Accept: application/json' \\\n  -H 'Content-Type: application/json' \\\n  -d '{ \"name\": \"Tenali Ramakrishna\", \"email\": \"tenali@example.com\", \"gender\": \"male\", \"status\": \"active\" }'"
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener Usuarios",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response time is less than 200ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(200);",
+                  "});",
+                  "",
+                  "",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{URL}}/v2/users",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "v2",
+                "users"
+              ]
+            },
+            "description": "Generated from cURL: curl -X GET 'https://gorest.co.in/public/v2/users' \\\n  -H 'Accept: application/json'"
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener Usuario",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response time is less than 200ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(200);",
+                  "});",
+                  "",
+                  "pm.test(\"JSON response has the correct fields\", function () {",
+                  "    pm.expect(pm.response.json()).to.have.all.keys('id', 'name', 'email', 'gender', 'status');",
+                  "});",
+                  "",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{URL}}/v2/users/{{idUsuario}}",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "v2",
+                "users",
+                "{{idUsuario}}"
+              ]
+            },
+            "description": "Generated from cURL: curl -X GET 'https://gorest.co.in/public/v2/users/1' \\\n  -H 'Accept: application/json'"
+          },
+          "response": []
+        },
+        {
+          "name": "Editar Usuario",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Response time is less than 200ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(200);",
+                  "});",
+                  "",
+                  "pm.test(\"JSON response has the correct fields\", function () {",
+                  "    pm.expect(pm.response.json()).to.have.all.keys('id', 'name', 'email', 'gender', 'status');",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \n    \"name\": \"Fer Update\", \n    \"status\": \"inactive\" \n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{URL}}/v2/users/{{idUsuario}}",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "v2",
+                "users",
+                "{{idUsuario}}"
+              ]
+            },
+            "description": "Generated from cURL: curl -X PUT 'https://gorest.co.in/public/v2/users/1' \\\n  -H 'Accept: application/json' \\\n  -H 'Content-Type: application/json' \\\n  -d '{ \"name\": \"Updated Name\", \"status\": \"inactive\" }'"
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar Usuario",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 204\", function () {",
+                  "    pm.response.to.have.status(204);",
+                  "});",
+                  "pm.test(\"Response time is less than 200ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(200);",
+                  "});",
+                  "",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{URL}}/v2/users/{{idUsuario}}",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "v2",
+                "users",
+                "{{idUsuario}}"
+              ]
+            },
+            "description": "Generated from cURL: curl -X DELETE 'https://gorest.co.in/public/v2/users/1' \\\n  -H 'Accept: application/json'"
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "post",
+      "item": [
+        {
+          "name": "Crear post",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 201\", function () {",
+                  "    pm.response.to.have.status(201);",
+                  "});",
+                  "",
+                  "pm.test(\"Response time is less than 200ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response body has correct structure\", function () {",
+                  "    pm.expect(pm.response.json()).to.have.property(\"id\");",
+                  "    pm.expect(pm.response.json()).to.have.property(\"user_id\");",
+                  "    pm.expect(pm.response.json()).to.have.property(\"title\");",
+                  "    pm.expect(pm.response.json()).to.have.property(\"body\");",
+                  "});",
+                  "",
+                  "pm.test(\"id is not null\", function () {",
+                  "    pm.expect(pm.response.json().id).to.not.be.null;",
+                  "    pm.environment.set(\"idPost\", pm.response.json().id);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"lo peor\",\n    \"body\": \"La peor cosa que he visto\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{URL}}/v2/users/{{idUsuario}}/posts",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "v2",
+                "users",
+                "{{idUsuario}}",
+                "posts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Actualizar post",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Response time is less than 200ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(200);",
+                  "});",
+                  "",
+                  "pm.test(\"responde structure\", function () {",
+                  "    pm.expect(pm.response.json()).to.have.property(\"id\");",
+                  "    pm.expect(pm.response.json()).to.have.property(\"user_id\");",
+                  "    pm.expect(pm.response.json()).to.have.property(\"title\");",
+                  "    pm.expect(pm.response.json()).to.have.property(\"body\");",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"title\": \"lo mejor\",\n    \"body\": \"La peor cosa que he visto\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{URL}}/v2/posts/{{idPost}}",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "v2",
+                "posts",
+                "{{idPost}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener posts del usuario",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Response time is less than 200ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(200);",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{URL}}/v2/users/{{idUsuario}}/posts",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "v2",
+                "users",
+                "{{idUsuario}}",
+                "posts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener posts",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Response time is less than 200ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/v2/posts",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "v2",
+                "posts"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener post",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Response time is less than 200ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Structure of the response is correct\", function () {",
+                  "    pm.expect(pm.response.json()).to.have.property(\"id\");",
+                  "    pm.expect(pm.response.json()).to.have.property(\"user_id\");",
+                  "    pm.expect(pm.response.json()).to.have.property(\"title\");",
+                  "    pm.expect(pm.response.json()).to.have.property(\"body\");",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/v2/posts/{{idPost}}",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "v2",
+                "posts",
+                "{{idPost}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar post",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 204\", function () {",
+                  "    pm.response.to.have.status(204);",
+                  "});",
+                  "",
+                  "pm.test(\"Response time is less than 200ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(200);",
+                  "});",
+                  "",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/v2/posts/{{idPost}}",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "v2",
+                "posts",
+                "{{idPost}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "comments",
+      "item": [
+        {
+          "name": "Crear comment",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.environment.set(\"idComment\", pm.response.json().id);"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"fernando\",\n    \"email\": \"fernando@gmail.com\",\n    \"body\": \"lo peor de lo peor\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{URL}}/v2/posts/{{idPost}}/comments",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "v2",
+                "posts",
+                "{{idPost}}",
+                "comments"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Actualizar comment",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Response time is less than 200ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Structure of the response body\", function () {",
+                  "    pm.expect(pm.response.json()).to.have.property('id');",
+                  "    pm.expect(pm.response.json()).to.have.property('post_id');",
+                  "    pm.expect(pm.response.json()).to.have.property('name');",
+                  "    pm.expect(pm.response.json()).to.have.property('email');",
+                  "    pm.expect(pm.response.json()).to.have.property('body');",
+                  "})",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n    \"name\": \"fernando\",\n    \"email\": \"fernando@gmail.com\",\n    \"body\": \"lo peor de lo peor\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "{{URL}}/v2/comments/{{idComment}}",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "v2",
+                "comments",
+                "{{idComment}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener comments del post",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Response time is less than 200ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/v2/posts/{{idPost}}/comments",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "v2",
+                "posts",
+                "{{idPost}}",
+                "comments"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener comments",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Response time is less than 200ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(200);",
+                  "});",
+                  ""
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/v2/comments",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "v2",
+                "comments"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Obtener comment",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 200\", function () {",
+                  "    pm.response.to.have.status(200);",
+                  "});",
+                  "pm.test(\"Response time is less than 200ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(200);",
+                  "});",
+                  "",
+                  "pm.test(\"Structure of the response is correct\", function () {",
+                  "    pm.expect(pm.response.json()).to.have.property('id');",
+                  "    pm.expect(pm.response.json()).to.have.property('post_id');",
+                  "    pm.expect(pm.response.json()).to.have.property('name');",
+                  "    pm.expect(pm.response.json()).to.have.property('email');",
+                  "    pm.expect(pm.response.json()).to.have.property('body');",
+                  "})"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/v2/comments/{{idComment}}",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "v2",
+                "comments",
+                "{{idComment}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "Eliminar comment",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "pm.test(\"Status code is 204\", function () {",
+                  "    pm.response.to.have.status(204);",
+                  "});",
+                  "pm.test(\"Response time is less than 200ms\", function () {",
+                  "    pm.expect(pm.response.responseTime).to.be.below(200);",
+                  "});"
+                ],
+                "type": "text/javascript",
+                "packages": {},
+                "requests": {}
+              }
+            }
+          ],
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{URL}}/v2/comments/{{idComment}}",
+              "host": [
+                "{{URL}}"
+              ],
+              "path": [
+                "v2",
+                "comments",
+                "{{idComment}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "idPost",
+      "value": ""
+    }
+  ]
+}
