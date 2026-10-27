@@ -1,5 +1,6 @@
 pipeline {
     agent any
+
     options {
         disableConcurrentBuilds()
         timeout(time: 20, unit: 'MINUTES')
@@ -10,7 +11,7 @@ pipeline {
     stages {
         stage('Preparación') {
             steps {
-                sh 'node --version && npm --version && newman --version'
+                sh 'node --version && npm --version && newman --version && mvn --version'
                 dir('webdriverio') {
                     sh 'npm ci --no-audit --no-fund'
                 }
@@ -51,6 +52,40 @@ pipeline {
                     archiveArtifacts artifacts: 'webdriverio/reports/**/*', allowEmptyArchive: true
                 }
             }
+        }
+        stage('Karate') {
+            steps {
+                dir('myproject') {
+                    withCredentials([string(credentialsId: 'gorest-api-token', variable: 'GOREST_TOKEN')]) {
+                        sh 'mvn test'
+                    }
+                }
+            }
+            post {
+                always {
+                    junit testResults: 'myproject/target/surefire-reports/*.xml', allowEmptyResults: true
+                    publishHTML(target: [
+                        allowMissing: true,
+                        alwaysLinkToLastBuild: true,
+                        keepAll: true,
+                        reportDir: 'myproject/target/karate-reports',
+                        reportFiles: 'karate-summary.html',
+                        reportName: 'Reporte de Pruebas Karate'
+                    ])
+                }
+            }
+        }
+    }
+    post {
+        always {
+            echo 'Pipeline finalizado — limpiando workspace.'
+            cleanWs()
+        }
+        success {
+            echo 'Pruebas Karate ejecutadas con éxito.'
+        }
+        failure {
+            echo 'Falló alguna etapa del pipeline.'
         }
     }
 }
