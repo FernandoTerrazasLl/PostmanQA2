@@ -50,6 +50,9 @@ pipeline {
                 always {
                     junit testResults: 'webdriverio/reports/junit/*.xml', allowEmptyResults: false
                     archiveArtifacts artifacts: 'webdriverio/reports/**/*', allowEmptyArchive: true
+                    allure includeProperties: false,
+                        jdk: '',
+                        results: [[path: 'webdriverio/reports/allure-results']]
                 }
             }
         }

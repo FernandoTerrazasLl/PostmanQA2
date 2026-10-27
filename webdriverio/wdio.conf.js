@@ -29,12 +29,23 @@ export const config = {
         ['junit', {
             outputDir: path.join(reports, 'junit'),
             outputFileFormat: ({ cid }) => `wdio-${cid}.xml`
+        }],
+        ['allure', {
+            outputDir: path.join(reports, 'allure-results'),
+            disableWebdriverStepsReporting: true,
+            disableWebdriverScreenshotsReporting: false,
+            addConsoleLogs: true,
+            reportedEnvironmentVars: {
+                NODE_VERSION: process.version,
+                BROWSER: 'chrome'
+            }
         }]
     ],
     mochaOpts: { ui: 'bdd', timeout: 60000 },
     async onPrepare() {
         await rm(reports, { recursive: true, force: true });
         await mkdir(path.join(reports, 'junit'), { recursive: true });
+        await mkdir(path.join(reports, 'allure-results'), { recursive: true });
         await mkdir(path.join(reports, 'screenshots'), { recursive: true });
     },
     async afterTest(test, context, { passed }) {
