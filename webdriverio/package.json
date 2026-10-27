@@ -1,0 +1,22 @@
+{
+  "name": "postmanqa2-webdriverio",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Pruebas de login con WebdriverIO, Mocha y Page Object Model",
+  "scripts": {
+    "test": "wdio run ./wdio.conf.js",
+    "wdio": "npm test"
+  },
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "@wdio/cli": "9.31.5",
+    "@wdio/globals": "9.31.3",
+    "@wdio/junit-reporter": "^9.31.3",
+    "@wdio/local-runner": "9.31.5",
+    "@wdio/mocha-framework": "9.31.5",
+    "@wdio/spec-reporter": "9.31.2"
+  }
+}
