@@ -44,7 +44,9 @@ El destino remoto es Google Pixel 8 con Android 14. `APPIUM_SUITE=full` ejecuta 
 
 ## Jenkins y reportes
 
-En `Newman_Example`, selecciona **Build with Parameters** y elige `APPIUM_TARGET` (`local` o `browserstack`) y `APPIUM_SUITE` (`smoke` o `full`). El modo BrowserStack necesita una credencial **Username with password** con ID `browserstack-account`: Username es el usuario de automatización, Password es la Access Key. El Jenkinsfile enlaza esos valores temporalmente y sube el APK antes de la sesión.
+En `Newman_Example`, selecciona **Build with Parameters** y elige `APPIUM_TARGET` (`local` o `browserstack`) y `APPIUM_SUITE` (`smoke` o `full`). El modo BrowserStack necesita una credencial **Username with password** con ID `browserstack-account`: Username es el usuario de automatización, Password es la Access Key. El Jenkinsfile enlaza esos valores temporalmente y sube el APK antes de la sesión. Si ya subiste el mismo APK desde el panel, puedes introducir el identificador devuelto en `BROWSERSTACK_APP_ID` para reutilizarlo sin volver a cargarlo.
+
+Si BrowserStack rechaza la carga (por ejemplo HTTP 422), la build falla mostrando el mensaje de la plataforma y no inicia sesiones móviles. Puedes comprobar la carga desde App Management en BrowserStack; una ejecución local aprobada no se presenta como una ejecución remota aprobada.
 
 JUnit se guarda en `reports/junit`, Allure en `reports/allure-results`, y las evidencias de fallo en `reports/screenshots` y `reports/logs`. Jenkins publica JUnit y un Allure combinado con las pruebas web, y archiva las evidencias antes de limpiar el workspace. Un fallo de Appium hace fallar la build.
 

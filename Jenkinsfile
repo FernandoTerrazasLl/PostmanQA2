@@ -8,6 +8,7 @@ pipeline {
     parameters {
         choice(name: 'APPIUM_TARGET', choices: ['local', 'browserstack'], description: 'Destino de las pruebas móviles')
         choice(name: 'APPIUM_SUITE', choices: ['smoke', 'full'], description: 'Smoke: cronómetro; full: ocho escenarios de Reloj')
+        string(name: 'BROWSERSTACK_APP_ID', defaultValue: '', description: 'Opcional: bs://... del mismo APK Reloj subido manualmente. Vacío: cargar el APK desde Jenkins.')
     }
     environment {
         PATH = "/opt/homebrew/bin:/usr/local/bin:${env.PATH}"
@@ -90,7 +91,13 @@ pipeline {
                     script {
                         if (params.APPIUM_TARGET == 'browserstack') {
                             withCredentials([usernamePassword(credentialsId: 'browserstack-account', usernameVariable: 'BROWSERSTACK_USERNAME', passwordVariable: 'BROWSERSTACK_ACCESS_KEY')]) {
-                                def appId = sh(script: 'node scripts/upload-app.cjs', returnStdout: true).trim()
+                                def appId = params.BROWSERSTACK_APP_ID?.trim()
+                                if (!appId) {
+                                    appId = sh(script: 'node scripts/upload-app.cjs', returnStdout: true).trim()
+                                }
+                                if (!(appId ==~ /bs:\/\/[a-fA-F0-9]{40}/)) {
+                                    error('BROWSERSTACK_APP_ID debe ser un identificador bs:// seguido de 40 caracteres hexadecimales.')
+                                }
                                 withEnv(["BROWSERSTACK_APP_ID=${appId}"]) {
                                     sh 'npm run test:browserstack'
                                 }
