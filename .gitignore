@@ -3,3 +3,11 @@ node_modules/
 webdriverio/reports/
 myproject/target/
 myproject/*.log
+appiumCucumberPOM/reports/
+appiumCucumberPOM/logs/
+appiumCucumberPOM/.browserstack/
+appiumCucumberPOM/*.log
+appiumCucumberPOM/allure-results/
+appiumCucumberPOM/.env*
+appiumCucumberPOM/apps/
+*.apk
